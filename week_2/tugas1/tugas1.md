@@ -145,7 +145,7 @@ dapat dijalankan tanpa masalah. Berikut adalah contoh output jika konfigurasi be
 Setelah selesai mengatur konfigurasi, klik **Next** untuk memulai proses pembuatan virtual machine. Berikut adalah contoh tampilan saat proses berlangsung:
 
 <p align="center">
-  <img src="./img/db.JPG" alt="gambar" width="800">
+  <img src="./img/DB.jpg" alt="gambar" width="800">
 </p>
 
 10. Proses pembuatan virtual machine ini diperkirakan memerlukan waktu sekitar 30 hingga 60 menit.
