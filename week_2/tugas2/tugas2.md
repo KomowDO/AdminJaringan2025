@@ -38,6 +38,22 @@
     - [Runaway Process](#runaway-process)
     - [Proses Periodik](#proses-periodik)
     - [Kegunaan Umum Tugas Terjadwal](#kegunaan-umum-tugas-terjadwal)
+- [Bab 5: Filesystem](#bab-5-filesystem)
+  - [Pathname](#pathname)
+  - [Filesystem Mounting dan Unmounting](#filesystem-mounting-dan-unmounting)
+  - [Organisasi Pohon File di Sistem UNIX](#organisasi-pohon-file-di-sistem-unix)
+  - [Tipe File](#tipe-file)
+  - [Atribut File](#atribut-file)
+    - [Pengizinan Bit](#pengizinan-bit)
+    - [Bit `setuid` dan `setgid`](#bit-setuid-dan-setgid)
+    - [Sticky Bit](#sticky-bit)
+  - [Perintah Filesystem](#perintah-filesystem)
+    - [Perintah `ls`](#perintah-ls)
+    - [Perintah `chmod`](#perintah-chmod)
+    - [Perintah `chown`](#perintah-chown)
+    - [Perintah `chgrp`](#perintah-chgrp)
+    - [Perintah `umask`](#perintah-umask)
+  - [Access Control Lists (ACLs)](#access-control-lists-acls)
 
 ---
 
@@ -179,8 +195,207 @@ Proses periodik adalah tugas yang dijalankan secara terjadwal. Alat utama untuk 
 - Backup dan mirroring data
 
 Dengan memahami kontrol proses, administrator sistem dapat mengelola sumber daya secara efisien dan memastikan sistem berjalan lancar.
+
+Berikut adalah Markdown yang telah diperbaiki untuk Bab 5 tentang Filesystem:
+
+# Bab 5: Filesystem
+
+Filesystem bertujuan untuk merepresentasikan dan mengatur sumber daya penyimpanan sistem. Filesystem dapat dianggap terdiri dari empat komponen utama:
+
+- **Namespace**: Cara untuk memberi nama objek dan mengaturnya dalam hierarki.
+- **API**: Sekumpulan system calls untuk menavigasi dan memanipulasi objek.
+- **Model Keamanan**: Skema untuk melindungi, menyembunyikan, atau berbagi akses.
+- **Implementasi**: Perangkat lunak yang menghubungkan model logis dengan perangkat keras.
+
+Filesystem berbasis disk yang umum digunakan antara lain:
+
+- `ext4`, `XFS`, `UFS`, `ZFS (Oracle)`, dan `Btrfs`.
+- Filesystem "asing" seperti `FAT/NTFS (Windows)` dan `ISO 9660 (CD/DVD)`.
+
+Filesystem modern umumnya berfokus pada peningkatan kecepatan, keandalan, dan fitur tambahan di atas semantik filesystem standar.
+
+## Pathname
+
+Kata **"folder"** adalah istilah yang digunakan di Windows dan macOS, sementara di sistem UNIX/Linux, istilah yang lebih teknis adalah **direktori**.
+
+Pathname adalah rangkaian teks yang menggambarkan lokasi file dalam hierarki filesystem. Pathname bisa bersifat:
+
+- **Absolut**: Dimulai dari root (`/`), contoh:  
+  ```
+  /home/username/file.txt
+  ```
+- **Relatif**: Berdasarkan direktori saat ini, contoh:  
+  ```
+  ./file.txt
+  ```
+
+## Filesystem Mounting dan Unmounting
+
+Filesystem terdiri dari bagian-bagian kecil yang disebut **filesystem**, masing-masing mencakup satu direktori beserta subdirektori dan file di dalamnya. Istilah **file tree** digunakan untuk menggambarkan struktur keseluruhan, sementara **filesystem** merujuk pada cabang-cabang yang terpasang di pohon tersebut.
+
+- **Mounting**: Memetakan direktori dalam file tree yang ada (*mount point*) ke root filesystem baru.  
+  ```bash
+  mount /dev/sda4 /users
+  ```
+- **Unmounting**: Melepaskan filesystem dari hierarki penamaan.
+
+  - *Lazy Unmount*:  
+    ```bash
+    umount -l /mnt/point
+    ```
+  - *Forceful Unmount*:  
+    ```bash
+    umount -f /mnt/point
+    ```
+
+Untuk mencari proses yang menggunakan filesystem, gunakan `lsof` atau `fuser`:
+
+```bash
+lsof /home/arief
 ```
 
-Anda bisa menyalin dan menempelkan teks di atas ke dalam file Markdown (`.md`) untuk mendapatkan format yang rapi dan terstruktur.
+Contoh percobaan:
+
+
+Untuk melihat detail proses, gunakan `ps`:
+
+```bash
+ps up "1267 1445"
+```
+
+Contoh percobaan:
+
+
+[⬆ Kembali ke Daftar Isi](#daftar-isi)
+
+## Organisasi Pohon File di Sistem UNIX
+
+Struktur direktori di sistem UNIX/Linux memiliki konvensi penamaan yang bervariasi. Berikut adalah beberapa direktori penting:
+
+- `/` (root): Direktori utama yang mencakup set minimal file dan subdirektori.
+- `/boot`: Menyimpan kernel OS.
+- `/etc`: Berisi file konfigurasi dan sistem yang kritis.
+- `/sbin` dan `/bin`: Utilitas penting untuk administrasi sistem.
+- `/tmp`: File sementara.
+- `/dev`: File device (sekarang filesystem virtual).
+- `/lib` atau `/lib64`: Shared library dan komponen sistem.
+- `/usr`: Program standar non-kritis, manual, dan library.
+- `/var`: Direktori spool, file log, dan data yang sering berubah.
+
+## Tipe File
+
+Filesystem UNIX mendefinisikan **7 jenis file**:
+
+1. **File Reguler**: Kumpulan byte tanpa struktur khusus.
+2. **Direktori**: Referensi bernama ke file/direktori lain.
+3. **File Device Karakter**: Untuk komunikasi dengan hardware (contoh: `/dev/tty0`).
+4. **File Device Blok**: Untuk perangkat penyimpanan (contoh: `/dev/sda`).
+5. **Socket Domain Lokal**: Komunikasi antar-proses di host yang sama.
+6. **Pipa Bernama (FIFO)**: Jalur komunikasi antar-proses.
+7. **Tautan Simbolik**: Tautan fleksibel ke file/direktori.
+
+Contoh penggunaan perintah `file` untuk mengetahui jenis file:
+
+```bash
+file /bin/bash
+```
+
+Contoh percobaan:
+
+
+
+## Atribut File
+
+Setiap file memiliki **9 bit izin** yang menentukan siapa yang dapat membaca, menulis, dan mengeksekusi file. Bersama dengan **3 bit tambahan** (`setuid`, `setgid`, `sticky bit`), bit-bit ini membentuk mode file.
+
+- **Bit Izin**: `rwxr-xr--` (9 bit).
+- **Bit Tambahan**: `setuid`, `setgid`, `sticky bit` (3 bit).
+- **Bit Tipe File**: Menunjukkan jenis file (contoh: file reguler, direktori).
+
+### Pengizinan Bit
+
+Bit izin dibagi menjadi tiga grup:
+
+1. **Pemilik File (`u`)**.
+2. **Grup File (`g`)**.
+3. **Pengguna Lain (`o`)**.
+
+Notasi oktal (basis 8) digunakan karena setiap digit mewakili tiga bit:
+
+| Oktal | Izin |
+|-------|------|
+| 400   | setuid |
+| 200   | setgid |
+| 100   | sticky bit |
+
+### Bit `setuid` dan `setgid`
+
+- **setuid**: Mengubah pemilik file sementara saat dieksekusi.
+- **setgid**: Mengubah grup file sementara saat dieksekusi atau membuat file baru dalam direktori.
+
+### Sticky Bit
+
+Bit dengan nilai oktal `1000` mencegah pengguna menghapus atau mengganti nama file yang bukan milik mereka. Berguna untuk direktori seperti `/tmp`.
+
+## Perintah Filesystem
+
+### Perintah `ls`
+
+Menampilkan daftar file dan direktori. Opsi `-l` menampilkan format panjang.
+
+```bash
+ls -l /dev/tty0
+```
+
+Contoh percobaan:
+
+
+### Perintah `chmod`
+
+Digunakan untuk mengubah mode file, dengan notasi oktal atau simbolik.
+
+```bash
+chmod u+w file.txt
+chmod 755 file.txt
+```
+
+### Perintah `chown`
+
+Mengubah kepemilikan dan grup file.
+
+```bash
+chown -R arief:users /home/arief
+```
+
+Contoh percobaan:
+
+
+
+### Perintah `chgrp`
+
+Mengubah grup file.
+
+```bash
+chgrp -R users /home/arief
+```
+
+Contoh percobaan:
+
+
+### Perintah `umask`
+
+Mengatur izin default untuk file dan direktori baru.
+
+```bash
+umask 022
+```
+
+Contoh percobaan:
+
+[⬆ Kembali ke Daftar Isi](#daftar-isi)
+## Access Control Lists (ACLs)
+
+ACL memperluas model izin tradisional dengan memungkinkan banyak pemilik dan izin berbeda untuk file yang sama.
+
 
 
