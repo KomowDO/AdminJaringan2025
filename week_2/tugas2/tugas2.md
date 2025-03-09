@@ -54,6 +54,17 @@
     - [Perintah `chgrp`](#perintah-chgrp)
     - [Perintah `umask`](#perintah-umask)
   - [Access Control Lists (ACLs)](#access-control-lists-acls)
+- [Bab 6: Instalasi dan Manajemen Perangkat lunak](#bab-6-instalasi-dan-manajemen-perangkat-lunak)
+  - [Instalasi Sistem Operasi](#instalasi-sistem-operasi)
+    - [Distribusi Linux dan FreeBSD](#distribusi-linux-dan-freebsd)
+    - [Instalasi dari Jaringan](#instalasi-dari-jaringan)
+  - [Manajemen Paket Linux](#manajemen-paket-linux)
+    - [Sistem Manajemen Paket](#sistem-manajemen-paket)
+  - [Manajemen Paket Tingkat Tinggi](#manajemen-paket-tingkat-tinggi)
+    - [Repositori Paket](#repositori-paket)
+    - [APT: Advanced Package Tool](#apt-advanced-package-tool)
+    - [YUM: Yellowdog Updater, Modified](#yum-yellowdog-updater-modified)
+  - [Konfigurasi dan Lokalisasi Perangkat Lunak](#konfigurasi-dan-lokalisasi-perangkat-lunak)
 
 ---
 
@@ -396,6 +407,72 @@ Contoh percobaan:
 ## Access Control Lists (ACLs)
 
 ACL memperluas model izin tradisional dengan memungkinkan banyak pemilik dan izin berbeda untuk file yang sama.
+
+
+# Bab 6: Instalasi dan Manajemen Perangkat lunak
+
+## Instalasi Sistem Operasi
+
+### Distribusi Linux dan FreeBSD
+Distribusi Linux dan FreeBSD memiliki prosedur instalasi dasar yang cukup mudah. Untuk mesin fisik, Anda dapat melakukan booting dari **CD, DVD, atau USB drive**. Untuk mesin virtual, Anda dapat melakukan booting dari **file ISO**. Instalasi sistem operasi dasar dari media lokal cukup sederhana berkat aplikasi **GUI** yang memandu Anda melalui prosesnya.
+
+### Instalasi dari Jaringan
+Jika Anda harus menginstal OS pada lebih dari satu komputer, pendekatan menggunakan media lokal memiliki keterbatasan. Proses ini memakan waktu, rentan terhadap kesalahan, dan membosankan karena harus mengulang langkah yang sama berulang kali. Solusinya adalah menginstal OS dari **server jaringan**, yang merupakan praktik umum di pusat data dan lingkungan cloud.
+
+Metode yang paling umum menggunakan **DHCP dan TFTP** untuk melakukan booting sistem tanpa media fisik. Sistem kemudian mengambil file instalasi OS dari server jaringan menggunakan **HTTP, FTP, atau NFS**. File instalasi bisa berada di server yang sama atau di server yang berbeda.
+
+Kita dapat menyiapkan instalasi sepenuhnya otomatis melalui **PXE (Preboot eXecution Environment)**. Skema ini adalah standar dari **Intel** yang memungkinkan sistem melakukan booting dari antarmuka jaringan.
+
+PXE berfungsi seperti sistem operasi mini yang berada di **ROM** pada kartu jaringan. Ini mengekspos kemampuan jaringan melalui **API standar** yang digunakan oleh BIOS sistem. Dengan cara ini, satu **boot loader** dapat melakukan netboot pada PC yang mendukung PXE tanpa harus menyediakan **driver khusus** untuk setiap kartu jaringan.
+
+---
+
+## Manajemen Paket Linux
+### Sistem Manajemen Paket
+Dua format paket umum digunakan pada sistem Linux:
+- **RPM** digunakan oleh **Red Hat, CentOS, SUSE, Amazon Linux**, dan beberapa distribusi lainnya.
+- **DEB** digunakan oleh **Debian dan Ubuntu**.
+
+Keduanya secara fungsional serupa. Sistem pengemasan **RPM** dan **DEB** berfungsi sebagai alat manajemen konfigurasi dua lapis:
+1. **Alat dasar** untuk menginstal, menghapus, dan mengkueri paket:
+   - `rpm` untuk sistem **RPM**
+   - `dpkg` untuk sistem **DEB**
+2. **Alat tingkat lanjut** yang dapat menemukan dan mengunduh paket dari internet, menganalisis ketergantungan antar-paket, dan memperbarui semua paket dalam sistem:
+   - `yum` (**Yellowdog Updater, Modified**) untuk **RPM**
+   - `APT` (**Advanced Package Tool**) untuk **DEB**
+
+## Manajemen Paket Tingkat Tinggi
+Alat manajemen paket tingkat tinggi memungkinkan Anda untuk **menginstal, menghapus, dan memperbarui paket**, serta mencari dan menampilkan daftar paket yang terinstal dalam sistem.
+
+### Repositori Paket
+Distributor Linux mengelola **repositori perangkat lunak** yang bekerja sama dengan sistem manajemen paket yang dipilih. Konfigurasi default untuk sistem manajemen paket biasanya mengarah ke satu atau lebih **server web atau FTP** yang dikelola oleh distributor.
+
+Repositori paket terdiri dari:
+- **Release**: Snapshot yang konsisten dari kumpulan paket.
+- **Komponen**: Subset perangkat lunak dalam suatu release.
+- **Arsitektur**: Kelas perangkat keras yang dapat menjalankan biner yang sama. Contohnya, **i386** dari release **Fedora 20**.
+
+### APT: Advanced Package Tool
+APT adalah sekumpulan alat untuk mengelola paket **Debian**. Beberapa alat dalam APT meliputi:
+- `apt-get`: Alat baris perintah untuk instalasi, penghapusan, dan pemutakhiran paket.
+- `apt-cache`: Alat untuk mencari dan mengkueri cache paket APT.
+- `apt-file`: Alat untuk mencari file di dalam paket.
+- `apt-show-versions`: Alat untuk menampilkan versi paket.
+- `aptitude`: Antarmuka tingkat tinggi untuk sistem manajemen paket.
+- `apt-mirror`: Alat untuk membuat mirror dari repositori paket.
+
+> **Catatan**: Pada sistem **Ubuntu**, aturan pertama dalam menggunakan APT adalah mengabaikan keberadaan `dselect`, yang bertindak sebagai frontend untuk sistem paket Debian.
+
+### YUM: Yellowdog Updater, Modified
+`yum` adalah manajer paket untuk sistem Linux yang menggunakan **RPM**. Fitur utama `yum`:
+- Menyelesaikan dependensi saat menginstal, memperbarui, dan menghapus paket.
+- Mengelola paket dari repositori yang terinstal.
+- Dapat melakukan operasi baris perintah pada paket individu.
+
+---
+
+## Konfigurasi dan Lokalisasi Perangkat Lunak
+Mengadaptasi sistem ke lingkungan lokal (atau cloud) merupakan tantangan utama dalam administrasi sistem. Menangani masalah lokalisasi dengan cara yang terstruktur dan dapat direproduksi membantu menghindari terciptanya **sistem "snowflake"** yang sulit dipulihkan setelah insiden besar.
 
 
 
