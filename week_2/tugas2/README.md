@@ -1,4 +1,4 @@
-# Laporan Praktikum Workshop Administrasi Jaringan
+# Laporan Praktikum Workshop Administrasi Jaringan Week-2
 
 <p align="center">
   <img src="./img/pens.png" alt="gambar" width="400">
@@ -18,7 +18,7 @@
 ---
 
 ## Daftar Isi
-- [Laporan Praktikum Workshop Administrasi Jaringan](#laporan-praktikum-workshop-administrasi-jaringan)
+- [Laporan Praktikum Workshop Administrasi Jaringan Week-2](#laporan-praktikum-workshop-administrasi-jaringan-week-2)
   - [Dosen Pengampu](#dosen-pengampu)
   - [Disusun Oleh](#disusun-oleh)
   - [Daftar Isi](#daftar-isi)

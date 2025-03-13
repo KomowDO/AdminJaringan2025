@@ -1,4 +1,4 @@
-# Laporan Praktikum Workshop Administrasi Jaringan - Wireshark
+# Laporan Praktikum Workshop Administrasi Jaringan - Wireshark Week-1
 
 <p align="center">
   <img src="./img/pens.png" alt="gambar" width="400">

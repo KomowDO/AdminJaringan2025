@@ -1,4 +1,4 @@
-# Laporan Praktikum Workshop Administrasi Jaringan - Instalasi Virtual Box Menggunakan Lab Komputer
+# Laporan Praktikum Workshop Administrasi Jaringan - Instalasi Virtual Box Menggunakan Lab Komputer Week-2
 
 <p align="center">
   <img src="./img/pens.png" alt="gambar" width="400">
