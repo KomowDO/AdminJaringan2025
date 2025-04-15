@@ -26,7 +26,6 @@
   - [Konfigurasi Virtual Machine No-GUI (VM 1)](#konfigurasi-virtual-machine-no-gui-vm-1)
   - [Instalasi NTP Client](#instalasi-ntp-client)
   - [Instalasi Samba](#instalasi-samba)
-  - [](#)
   - [Instalasi Bind9 (DNS)](#instalasi-bind9-dns)
 ---
 
@@ -215,75 +214,60 @@ Langkah 1:<br>
 unduh package samba dengan menggunakan perintah `sudo apt -y install samba`.
 <br>Gambar:
 
-<p align="center">
-  <img src="./img/s1.png" alt="gambar" width="400">
-</p>
+<img src="./img/s1.png" alt="gambar" width="800">
 
 Langkah 2:<br>
 Membuat direktori dengan menggunaakn perintah `sudo mkdir /home/public`.
 <br>Gambar:
 
-<p align="center">
-  <img src="./img/s3.png" alt="gambar" width="400">
-</p>
+<img src="./img/s3.png" alt="gambar" width="800">
 
 Langkah 3:<br>
 Merubah akses agar semua dapat write, read, dan excute dengan perintah `sudo chmod 777 /home/public`.
 <br>Gambar:
 
-<p align="center">
-  <img src="./img/s3.png" alt="gambar" width="400">
-</p>
+<img src="./img/s3.png" alt="gambar" width="800">
 
 Langkah 4:<br>
 Konfigurasi file samba menggunakan perintah `sudo nano /etc/samba/smb.conf`.
 <br>Gambar:
 
-<p align="center">
-  <img src="./img/s4.png" alt="gambar" width="400">
-</p>
+<img src="./img/s4.png" alt="gambar" width="800">
 
 Langkah 5:<br>
 Menambahkan `unix charset = UTF-8` untuk kompatibilitas dengan sistem yang mendukung pengkodean UTF-8.
 <br>Gambar:
 
-<p align="center">
-  <img src="./img/s5.png" alt="gambar" width="400">
-</p>
+<img src="./img/s5.png" alt="gambar" width="800">
 
 Langkah 6:<br>
 Menambahkan interface sesuai dengan alamat IP yang akan digunakan.
 <br>Gambar:
 
-<p align="center">
-  <img src="./img/s6.png" alt="gambar" width="400">
-</p>
+<img src="./img/s6.png" alt="gambar" width="800">
+
 
 Langkah 7:<br>
 Menambahkan konfigurasi folder public.
 <br>Gambar:
 
-<p align="center">
-  <img src="./img/s7.png" alt="gambar" width="400">
-</p>
+<img src="./img/s7.png" alt="gambar" width="800">
+
 
 Langkah 8:<br>
 Melakukan restart dengan perintah `sudo systemctl restart smbd`.
 <br>Gambar:
 
-<p align="center">
-  <img src="./img/s8.png" alt="gambar" width="400">
-</p>
+<img src="./img/s8.png" alt="gambar" width="800">
+
 
 Langkah 9:<brd>
 Lakukan pengecekan akses samba dalam VM 1 yang menggunakan IP Statik [smb://192.168.200.1] dengan menggunakan VM 2.
 <br>Gambar:
-<p align="center">
-  <img src="./img/s9.png" alt="gambar" width="400">
-</p>
-<p align="center">
-  <img src="./img/s10.png" alt="gambar" width="400">
-</p>
+<img src="./img/s9.png" alt="gambar" width="800">
+
+<img src="./img/s10.png" alt="gambar" width="800">
+
 -----
 
 ## Instalasi Bind9 (DNS)
