@@ -228,6 +228,7 @@ Melakukan restart dengan perintah `sudo systemctl restart smbd`.
 Langkah 9:<brd>
 Lakukan pengecekan akses samba dalam VM 1 yang menggunakan IP Statik [smb://192.168.200.1] dengan menggunakan VM 2.
 <br>Gambar:
+
 <img src="./img/s9.png" alt="gambar" width="800">
 
 <img src="./img/s10.png" alt="gambar" width="800">
