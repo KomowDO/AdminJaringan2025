@@ -81,44 +81,28 @@ Login dengan menggunakan student sebagai username dan password.
 Langkah 2:<br>
 Jalankan perintah `ip a` untuk melihat ip address dan ambil ip dari interface enp0s3. Buka terminal atau command prompt pada window host, jalankan command ssh student@\[IP-Address-enp0s3] dan login seperti dalam VM untuk menggunakan VM no-GUI dalam terminal windows.
 <br>Gambar:
-<p align="center">
-  <img src="./img/c1.png" alt="gambar" width="400">
-</p>
-<p align="center">
-  <img src="./img/c2.png" alt="gambar" width="400">
-</p>
+<img src="./img/c1.png" alt="gambar" width="800">
+<img src="./img/c2.png" alt="gambar" width="800">
 
 Langkah 3:<br>
 Setelah itu, Konfigurasikan jaringan dan cek dengan menggunakan perintah `nano -l -w /etc/network/interfaces`.
 <br>Gambar:
-<p align="center">
-  <img src="./img/c3.png" alt="gambar" width="400">
-</p>
-<p align="center">
-  <img src="./img/c4.png" alt="gambar" width="400">
-</p>
+<img src="./img/c3.png" alt="gambar" width="800">
+<img src="./img/c4.png" alt="gambar" width="800">
 
 Langkah 4:<br>
 Konfigurasi `sysctl.conf` untuk menghapus comment pada bagian `net.ipv4.ip_forward=1` dengan menggunakan perintah `nano -l -w /etc/sysctl.conf`.
 <br>Gambar:
 
-<p align="center">
-  <img src="./img/c5.png" alt="gambar" width="400">
-</p>
+<img src="./img/c5.png" alt="gambar" width="800">
 
-<p align="center">
-  <img src="./img/c6.png" alt="gambar" width="400">
-</p>
+<img src="./img/c6.png" alt="gambar" width="800">
 
 Langkah 5:<br>
 Unduh package `iptables` dan `iptables-persistent` dengan menggunakan perintah `sudo apt-get install iptables iptables-persistent`.
 <br>Gambar:
-<p align="center">
-  <img src="./img/c7.png" alt="gambar" width="400">
-</p>
-<p align="center">
-  <img src="./img/c8.png" alt="gambar" width="400">
-</p>
+<img src="./img/c7.png" alt="gambar" width="800">
+<img src="./img/c8.png" alt="gambar" width="800">
 
 Langkah 6:<br>
 tambahkan baris kode berikut kedalam `/etc/iptables/rules.v4` menggunakan perintah `sudo nano -l -w /etc/iptables/rules.v4`.
@@ -139,75 +123,55 @@ tambahkan baris kode berikut kedalam `/etc/iptables/rules.v4` menggunakan perint
  COMMIT
 ```
 <br>Gambar:
-<p align="center">
-  <img src="./img/c9.png" alt="gambar" width="400">
-</p>
-<p align="center">
-  <img src="./img/c10.png" alt="gambar" width="400">
-</p>
+<img src="./img/c9.png" alt="gambar" width="800">
+<img src="./img/c10.png" alt="gambar" width="800">
 
 Langkah 7:<br>
 Jalankan perintah `sudo iptables-restore < /etc/iptables/rules.v4` untuk mengembalikan aturan-aturan iptables dari file konfigurasi yang telah disimpan sebelumnya.
 <br>Gambar:
-<p align="center">
-  <img src="./img/c11.png" alt="gambar" width="400">
-</p>
+<img src="./img/c11.png" alt="gambar" width="800">
 
 Langkah 8:
 Lakukan reboot VM dengan menggunakan perintah `sudo reboot`.
 <br>Gambar:
-<p align="center">
-  <img src="./img/c12.png" alt="gambar" width="400">
-</p>
+<img src="./img/c12.png" alt="gambar" width="800">
 
 ## Instalasi NTP Client
 Langkah 1:
 Instalasi NTP Client menggunakan perintah `sudo apt -y install ntpsec`.
 <br>Gambar:
 
-<p align="center">
-  <img src="./img/q1.png" alt="gambar" width="400">
-</p>
+<img src="./img/q1.png" alt="gambar" width="800">
 
 Langkah 2:
 Setelah selesai instalasi, gunakan perintah `sudo nano /etc/ntpsec/ntp.conf` untuk mengakses file konfigurasi NTP Client.
 <br>Gambar:
 
-<p align="center">
-  <img src="./img/q2.png" alt="gambar" width="400">
-</p>
+<img src="./img/q2.png" alt="gambar" width="800">
 
 Langkah 3:
 Pada dalam ntp.conf, beri komen (#) pada pool ke empat pool yang ada dan masukkan server Indonesia yang dapat disalin dari web `https://www.ntppool.org/en/zone/id`.
 <br>Gambar:
 
-<p align="center">
-  <img src="./img/q3.png" alt="gambar" width="400">
-</p>
+<img src="./img/q3.png" alt="gambar" width="800">
 
 Langkah 4:
 Setelah konfigurasi, lakukan restart untuk NTP Client untuk menggunakan konfigurasi yang baru dengan perintah `sudo systemctl restart ntpsec`.
 <br>Gambar:
 
-<p align="center">
-  <img src="./img/q4.png" alt="gambar" width="400">
-</p>
+<img src="./img/q4.png" alt="gambar" width="800">
 
 Langkah 5:
 Untuk melihat jika sudah tersambung dengan server, gunakan perintah `ntpq -p`.
 <br>Gambar:
 
-<p align="center">
-  <img src="./img/q5.png" alt="gambar" width="400">
-</p>
+<img src="./img/q5.png" alt="gambar" width="800">
 
 Langkah 6:
 Periksa waktu NTP Client dengan menggunakan perintah `sudo systemctl status ntpsec`.
 <br>Gambar:
 
-<p align="center">
-  <img src="./img/q6.png" alt="gambar" width="400">
-</p>
+<img src="./img/q6.png" alt="gambar" width="800">
 
 ## Instalasi Samba
 Langkah 1:<br>
