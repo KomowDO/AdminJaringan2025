@@ -26,6 +26,7 @@
   - [Konfigurasi Virtual Machine No-GUI (VM 1)](#konfigurasi-virtual-machine-no-gui-vm-1)
   - [Instalasi NTP Client](#instalasi-ntp-client)
   - [Instalasi Samba](#instalasi-samba)
+  - [](#)
   - [Instalasi Bind9 (DNS)](#instalasi-bind9-dns)
 ---
 
@@ -277,7 +278,13 @@ Melakukan restart dengan perintah `sudo systemctl restart smbd`.
 Langkah 9:<brd>
 Lakukan pengecekan akses samba dalam VM 1 yang menggunakan IP Statik [smb://192.168.200.1] dengan menggunakan VM 2.
 <br>Gambar:
-
+<p align="center">
+  <img src="./img/s9.png" alt="gambar" width="400">
+</p>
+<p align="center">
+  <img src="./img/s10.png" alt="gambar" width="400">
+</p>
+-----
 
 ## Instalasi Bind9 (DNS)
 Langkah 1:<br>
