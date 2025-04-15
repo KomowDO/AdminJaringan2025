@@ -243,7 +243,9 @@ Instalasi BIND menggunakan perintah `sudo apt -y install bind9 bind9utils`.
 Langkah 2:<br>
 Konfigurasi BIND untuk network internal dalam named.conf menggunakan perintah `sudo nano /etc/bind/named.conf` untuk menambahkan `include "/etc/bind/named.conf.internal-zones";`.
 <br>Gambar:
+
 <img src="./img/b2.png" alt="gambar" width="800">
+
 <img src="./img/b2.1.png" alt="gambar" width="800">
 
 
@@ -326,6 +328,7 @@ Konfigurasi jaringan Wired menjadi IP statik seperti yang tertera pada gambar. J
 Langkah 12:<br>
 Jika VM 2 sudah terhubung dengan VM 1 melalui internal network, lakukan pengecekan DNS yang ada pada VM 1 dengan menggunakan `dig ns.kelompok2.home.` dan `dig -x 192.168.200.1`. Indikasi berhasilnya DNS pada VM 1 dapat dilihat dari flag `ANSWER: 1` atau lebih dan dengan `status: NOERROR`
 <br>Gambar:
+
 <img src="./img/b12.png" alt="gambar" width="800">
 
 <img src="./img/b12.1.png" alt="gambar" width="800">
