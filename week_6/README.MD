@@ -238,10 +238,14 @@ Lakukan pengecekan akses samba dalam VM 1 yang menggunakan IP Statik [smb://192.
 Langkah 1:<br>
 Instalasi BIND menggunakan perintah `sudo apt -y install bind9 bind9utils`.
 <br>Gambar:
+<img src="./img/b1.png" alt="gambar" width="800">
 
 Langkah 2:<br>
 Konfigurasi BIND untuk network internal dalam named.conf menggunakan perintah `sudo nano /etc/bind/named.conf` untuk menambahkan `include "/etc/bind/named.conf.internal-zones";`.
 <br>Gambar:
+<img src="./img/b2.png" alt="gambar" width="800">
+<img src="./img/b2.1.png" alt="gambar" width="800">
+
 
 Langkah 3:<br>
 Konfigurasi BIND untuk network internal dalam named.conf.options menggunakan perintah `sudo nano /etc/bind/named.conf.options` untuk menambahkan: 
@@ -257,6 +261,8 @@ Konfigurasi BIND untuk network internal dalam named.conf.options menggunakan per
         recursion yes;
 ```
 Gambar:
+<img src="./img/b3.png" alt="gambar" width="800">
+
 
 Langkah 4:<br>
 Konfigurasi BIND untuk network internal dalam named.conf.internal-zones menggunakan perintah `sudo nano /etc/bind//etc/bind/named.conf.internal-zones` untuk menambahkan:<br>
@@ -273,6 +279,8 @@ zone "200.168.192.in-addr.arpa" IN {
 };
 ```
 Gambar:
+<img src="./img/b4.png" alt="gambar" width="800">
+
 
 Langkah 5:<br>
 Konfigurasi BIND untuk network internal dalam /default/named menggunakan perintah `sudo nano /etc/default/named` untuk menambahkan:<br>
@@ -281,31 +289,43 @@ Konfigurasi BIND untuk network internal dalam /default/named menggunakan perinta
 OPTIONS="-u bind -4"
 ```
 Gambar:
+<img src="./img/b5.png" alt="gambar" width="800">
+
 
 Langkah 6:<br>
 Membuat file zona yang digunakan server untuk menyelesaikan alamat IP dari nama domain, menggunakan perintah `sudo nano /etc/bind/kelompok2.home.lan`.
 <br>Gambar:
+<img src="./img/b6.png" alt="gambar" width="800">
+
 
 Langkah 7:<br>
 Buat file zona yang memungkinkan server mengubah nama domain menjadi alamat IP menggunakan perintah `sudo nano /etc/bind/200.168.192.db`.
 <br>Gambar:
+<img src="./img/b7.png" alt="gambar" width="800">
 
 Langkah 8:<br>
 Restart BIND untuk menyimpan perubahan menggunakan `sudo systemctl restart named`.
 <br>Gambar:
+<img src="./img/b8.png" alt="gambar" width="800">
 
 Langkah 9:<br>
 Merubah pengaturan DNS untuk merujuk ke DNS sendiri pada `sudo nano /etc/resolv.conf`.
 <br>Gambar:
+<img src="./img/b9.png" alt="gambar" width="800">
 
 Langkah 10:<br>
 Pada VM 2, ubah adapter 1 di setting > Network menjadi internal network.
 <br>Gambar:
+<img src="./img/b10.png" alt="gambar" width="800">
 
 Langkah 11:<br>
 Konfigurasi jaringan Wired menjadi IP statik seperti yang tertera pada gambar. Jika sudah, klik apply untuk menyimpan perubahan.
 <br>Gambar:
+<img src="./img/b11.png" alt="gambar" width="800">
 
 Langkah 12:<br>
 Jika VM 2 sudah terhubung dengan VM 1 melalui internal network, lakukan pengecekan DNS yang ada pada VM 1 dengan menggunakan `dig ns.kelompok2.home.` dan `dig -x 192.168.200.1`. Indikasi berhasilnya DNS pada VM 1 dapat dilihat dari flag `ANSWER: 1` atau lebih dan dengan `status: NOERROR`
 <br>Gambar:
+<img src="./img/b12.png" alt="gambar" width="800">
+
+<img src="./img/b12.1.png" alt="gambar" width="800">
