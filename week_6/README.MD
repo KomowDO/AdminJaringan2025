@@ -272,9 +272,9 @@ Gambar:
 Langkah 4:<br>
 Konfigurasi BIND untuk network internal dalam named.conf.internal-zones menggunakan perintah `sudo nano /etc/bind//etc/bind/named.conf.internal-zones` untuk menambahkan:<br>
 ```bash
-zone "kelompok2.home" IN {
+zone "kelompok8.home" IN {
         type master;
-        file "/etc/bind/kelompok2.home.lan";
+        file "/etc/bind/kelompok8.home.lan";
         allow-update { none; };
 };
 zone "200.168.192.in-addr.arpa" IN {
@@ -300,7 +300,7 @@ Gambar:
 
 
 Langkah 6:<br>
-Membuat file zona yang digunakan server untuk menyelesaikan alamat IP dari nama domain, menggunakan perintah `sudo nano /etc/bind/kelompok2.home.lan`.
+Membuat file zona yang digunakan server untuk menyelesaikan alamat IP dari nama domain, menggunakan perintah `sudo nano /etc/bind/kelompok8.home.lan`.
 <br>Gambar:
 
 <img src="./img/b6.png" alt="gambar" width="800">
@@ -337,7 +337,7 @@ Konfigurasi jaringan Wired menjadi IP statik seperti yang tertera pada gambar. J
 <img src="./img/b11.png" alt="gambar" width="800">
 
 Langkah 12:<br>
-Jika VM 2 sudah terhubung dengan VM 1 melalui internal network, lakukan pengecekan DNS yang ada pada VM 1 dengan menggunakan `dig ns.kelompok2.home.` dan `dig -x 192.168.200.1`. Indikasi berhasilnya DNS pada VM 1 dapat dilihat dari flag `ANSWER: 1` atau lebih dan dengan `status: NOERROR`
+Jika VM 2 sudah terhubung dengan VM 1 melalui internal network, lakukan pengecekan DNS yang ada pada VM 1 dengan menggunakan `dig ns.kelompok8.home.` dan `dig -x 192.168.200.1`. Indikasi berhasilnya DNS pada VM 1 dapat dilihat dari flag `ANSWER: 1` atau lebih dan dengan `status: NOERROR`
 <br>Gambar:
 
 <img src="./img/b12.png" alt="gambar" width="800">
