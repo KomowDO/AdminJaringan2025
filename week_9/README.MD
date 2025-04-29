@@ -1,4 +1,4 @@
-# Laporan Praktikum Workshop Administrasi Jaringan Week-7
+# Laporan Praktikum Workshop Administrasi Jaringan Week-9
 
 <p align="center">
   <img src="./img/pens.png" alt="gambar" width="400">
@@ -16,6 +16,3 @@
 - **Tahun Ajaran**: 2025/2026  
 
 ---
-
-## Setting mikrotik
-
