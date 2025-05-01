@@ -17,6 +17,10 @@
 
 ---
 
+## Topologi
+
+<img src="./img/topo.jpg" alt="gambar" width="800">
+
 ## Setting IP STATIS
 Setting ip dan dns sesuai gambar dibawah :
 IP `192.168.8.10` Untuk server
