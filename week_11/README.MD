@@ -107,3 +107,8 @@ smtpd_recipient_restrictions =
 ```
 
 <img src="./img/p2.17.jpg" alt="gambar" width="800">
+
+
+### 19. Gunakan perintah `newaliases` dan `systemctl restart postfix` untuk restart
+
+<img src="./img/p3.jpg" alt="gambar" width="800">
